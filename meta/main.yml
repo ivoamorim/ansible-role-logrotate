@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  role_name: logrotate
+  author: Ivo Amorim
+  description: Role to configure a logrotate script
+  license: BSD
+  min_ansible_version: 1.0
+  platforms:
+    - name: centos
+      versions:
+        - 7
+  categories:
+    - system
+dependencies: []

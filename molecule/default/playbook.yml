@@ -1,0 +1,48 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    logrotate_scripts:
+      - name: "nginx-paths"
+        rules:
+          - paths:
+              - /var/log/nginx/path1.log
+              - /var/log/nginx/path2.log
+              - /var/log/nginx/path3.log
+      - name: "nginx-options"
+        rules:
+          - comment: daily
+            paths:
+              - /var/log/nginx/options.log
+            options:
+              - daily
+              - rotate 7
+      - name: "nginx-scripts"
+        rules:
+          - paths:
+              - /var/log/nginx/scripts.log
+            scripts:
+              postrotate: "echo test"
+      - name: "nginx-rules"
+        rules:
+          - comment: daily
+            paths:
+              - /var/log/nginx/rule1.log
+            options:
+              - daily
+          - comment: weekly
+            paths:
+              - /var/log/nginx/rule2.log
+            options:
+              - weekly
+            scripts:
+              postrotate: "echo test"
+
+  pre_tasks:
+    - name: Install Dependencies.
+      yum: name=libselinux-python
+      when: ansible_os_family == 'RedHat'
+      changed_when: false
+
+  roles:
+    - role: ansible-role-logrotate
