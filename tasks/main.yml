@@ -4,12 +4,5 @@
     name: logrotate
     state: present
   when: logrotate_scripts is defined and logrotate_scripts|length > 0
-  tags: install
 
-- name: Setup logrotate.d scripts
-  template:
-    src: logrotate.j2
-    dest: "{{ logrotate_conf_dir }}/{{ item.name }}"
-  with_items: "{{ logrotate_scripts }}"
-  when: logrotate_scripts is defined
-  tags: setup_scripts
+- include_tasks: create-scripts.yml

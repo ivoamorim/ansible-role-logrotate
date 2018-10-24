@@ -1,0 +1,7 @@
+---
+- name: Setup logrotate.d scripts
+  template:
+    src: logrotate.j2
+    dest: "{{ logrotate_conf_dir }}/{{ item.name }}"
+  with_items: "{{ logrotate_scripts }}"
+  when: logrotate_scripts is defined
